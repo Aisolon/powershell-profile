@@ -10,16 +10,16 @@ $timeFilePath = [Environment]::GetFolderPath("MyDocuments") + "\PowerShell\LastE
 $updateInterval = 7
 
 if ($debug) {
-    Write-Host "#######################################" -ForegroundColor Red
-    Write-Host "#           Debug mode enabled        #" -ForegroundColor Red
-    Write-Host "#          ONLY FOR DEVELOPMENT       #" -ForegroundColor Red
-    Write-Host "#                                     #" -ForegroundColor Red
-    Write-Host "#       IF YOU ARE NOT DEVELOPING     #" -ForegroundColor Red
-    Write-Host "#       JUST RUN \`Update-Profile\`   #" -ForegroundColor Red
-    Write-Host "#        to discard all changes       #" -ForegroundColor Red
-    Write-Host "#   and update to the latest profile  #" -ForegroundColor Red
-    Write-Host "#               version               #" -ForegroundColor Red
-    Write-Host "#######################################" -ForegroundColor Red
+    Write-Host "#######################################" -ForegroundColor #BF616A
+    Write-Host "#           Debug mode enabled        #" -ForegroundColor #BF616A
+    Write-Host "#          ONLY FOR DEVELOPMENT       #" -ForegroundColor #BF616A
+    Write-Host "#                                     #" -ForegroundColor #BF616A
+    Write-Host "#       IF YOU ARE NOT DEVELOPING     #" -ForegroundColor #BF616A
+    Write-Host "#       JUST RUN \`Update-Profile\`   #" -ForegroundColor #BF616A
+    Write-Host "#        to discard all changes       #" -ForegroundColor #BF616A
+    Write-Host "#   and update to the latest profile  #" -ForegroundColor #BF616A
+    Write-Host "#               version               #" -ForegroundColor #BF616A
+    Write-Host "#######################################" -ForegroundColor #BF616A
 }
 
 
@@ -66,9 +66,9 @@ function Update-Profile {
         $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
         if ($newhash.Hash -ne $oldhash.Hash) {
             Copy-Item -Path "$env:temp/Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
-            Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
+            Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor #D08770
         } else {
-            Write-Host "Profile is up to date." -ForegroundColor Green
+            Write-Host "Profile is up to date." -ForegroundColor #A3BE8C
         }
     } catch {
         Write-Error "Unable to check for `$profile updates: $_"
@@ -93,7 +93,7 @@ if (-not $debug -and `
 
 function Update-PowerShell {
     try {
-        Write-Host "Checking for PowerShell updates..." -ForegroundColor Cyan
+        Write-Host "Checking for PowerShell updates..." -ForegroundColor #88C0D0
         $updateNeeded = $false
         $currentVersion = $PSVersionTable.PSVersion.ToString()
         $gitHubApiUrl = "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
@@ -104,11 +104,11 @@ function Update-PowerShell {
         }
 
         if ($updateNeeded) {
-            Write-Host "Updating PowerShell..." -ForegroundColor Yellow
+            Write-Host "Updating PowerShell..." -ForegroundColor #EBCB8B
             Start-Process powershell.exe -ArgumentList "-NoProfile -Command winget upgrade Microsoft.PowerShell --accept-source-agreements --accept-package-agreements" -Wait -NoNewWindow
-            Write-Host "PowerShell has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
+            Write-Host "PowerShell has been updated. Please restart your shell to reflect changes" -ForegroundColor #D08770
         } else {
-            Write-Host "Your PowerShell is up to date." -ForegroundColor Green
+            Write-Host "Your PowerShell is up to date." -ForegroundColor #A3BE8C
         }
     } catch {
         Write-Error "Failed to update PowerShell. Error: $_"
@@ -131,25 +131,25 @@ if (-not $debug -and `
 
 function Clear-Cache {
     # add clear cache logic here
-    Write-Host "Clearing cache..." -ForegroundColor Cyan
+    Write-Host "Clearing cache..." -ForegroundColor #88C0D0
 
     # Clear Windows Prefetch
-    Write-Host "Clearing Windows Prefetch..." -ForegroundColor Yellow
+    Write-Host "Clearing Windows Prefetch..." -ForegroundColor #EBCB8B
     Remove-Item -Path "$env:SystemRoot\Prefetch\*" -Force -ErrorAction SilentlyContinue
 
     # Clear Windows Temp
-    Write-Host "Clearing Windows Temp..." -ForegroundColor Yellow
+    Write-Host "Clearing Windows Temp..." -ForegroundColor #EBCB8B
     Remove-Item -Path "$env:SystemRoot\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
 
     # Clear User Temp
-    Write-Host "Clearing User Temp..." -ForegroundColor Yellow
+    Write-Host "Clearing User Temp..." -ForegroundColor #EBCB8B
     Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
 
     # Clear Internet Explorer Cache
-    Write-Host "Clearing Internet Explorer Cache..." -ForegroundColor Yellow
+    Write-Host "Clearing Internet Explorer Cache..." -ForegroundColor #EBCB8B
     Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\Windows\INetCache\*" -Recurse -Force -ErrorAction SilentlyContinue
 
-    Write-Host "Cache clearing completed." -ForegroundColor Green
+    Write-Host "Cache clearing completed." -ForegroundColor #A3BE8C
 }
 
 # Admin Check and Prompt Customization
@@ -237,7 +237,7 @@ function uptime {
 
         # Format the start time
         $formattedBootTime = $bootTime.ToString("dddd, MMMM dd, yyyy HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture) + " [$lastBoot]"
-        Write-Host "System started on: $formattedBootTime" -ForegroundColor DarkGray
+        Write-Host "System started on: $formattedBootTime" -ForegroundColor #4C566A 
 
         # calculate uptime
         $uptime = (Get-Date) - $bootTime
@@ -249,7 +249,7 @@ function uptime {
         $seconds = $uptime.Seconds
 
         # Uptime output
-        Write-Host ("Uptime: {0} days, {1} hours, {2} minutes, {3} seconds" -f $days, $hours, $minutes, $seconds) -ForegroundColor Blue
+        Write-Host ("Uptime: {0} days, {1} hours, {2} minutes, {3} seconds" -f $days, $hours, $minutes, $seconds) -ForegroundColor #5E81AC 
 
     } catch {
         Write-Error "An error occurred while retrieving system uptime."
@@ -433,16 +433,16 @@ $PSReadLineOptions = @{
     HistoryNoDuplicates = $true
     HistorySearchCursorMovesToEnd = $true
     Colors = @{
-        Command = '#87CEEB'  # SkyBlue (pastel)
-        Parameter = '#98FB98'  # PaleGreen (pastel)
-        Operator = '#FFB6C1'  # LightPink (pastel)
-        Variable = '#DDA0DD'  # Plum (pastel)
-        String = '#FFDAB9'  # PeachPuff (pastel)
-        Number = '#B0E0E6'  # PowderBlue (pastel)
-        Type = '#F0E68C'  # Khaki (pastel)
-        Comment = '#D3D3D3'  # LightGray (pastel)
-        Keyword = '#8367c7'  # Violet (pastel)
-        Error = '#FF6347'  # Tomato (keeping it close to red for visibility)
+        Command = '#81A1C1'  # SkyBlue (pastel)
+        Parameter = '#A3BE8C'  # PaleGreen (pastel)
+        Operator = '#D08770'  # LightPink (pastel)
+        Variable = '#B48EAD'  # Plum (pastel)
+        String = '#EBCB8B'  # PeachPuff (pastel)
+        Number = '#8FBCBB'  # PowderBlue (pastel)
+        Type = '#EBCB8B'  # Khaki (pastel)
+        Comment = '#D8DEE9'  # LightGray (pastel)
+        Keyword = '#B48EAD'  # Violet (pastel)
+        Error = '#BF616A'  # Tomato (keeping it close to red for visibility)
     }
     PredictionSource = 'History'
     PredictionViewStyle = 'ListView'
@@ -531,93 +531,96 @@ if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     }
 }
 
+Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
+Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
+
 # Help Function
 function Show-Help {
     $helpText = @"
-$($PSStyle.Foreground.Cyan)PowerShell Profile Help$($PSStyle.Reset)
-$($PSStyle.Foreground.Yellow)=======================$($PSStyle.Reset)
+$($PSStyle.Foreground.#88C0D0)PowerShell Profile Help$($PSStyle.Reset)
+$($PSStyle.Foreground.#EBCB8B)=======================$($PSStyle.Reset)
 
-$($PSStyle.Foreground.Green)Update-Profile$($PSStyle.Reset) - Checks for profile updates from a remote repository and updates if necessary.
+$($PSStyle.Foreground.#A3BE8C)Update-Profile$($PSStyle.Reset) - Checks for profile updates from a remote repository and updates if necessary.
 
-$($PSStyle.Foreground.Green)Update-PowerShell$($PSStyle.Reset) - Checks for the latest PowerShell release and updates if a new version is available.
+$($PSStyle.Foreground.#A3BE8C)Update-PowerShell$($PSStyle.Reset) - Checks for the latest PowerShell release and updates if a new version is available.
 
-$($PSStyle.Foreground.Green)Edit-Profile$($PSStyle.Reset) - Opens the current user's profile for editing using the configured editor.
+$($PSStyle.Foreground.#A3BE8C)Edit-Profile$($PSStyle.Reset) - Opens the current user's profile for editing using the configured editor.
 
-$($PSStyle.Foreground.Green)touch$($PSStyle.Reset) <file> - Creates a new empty file.
+$($PSStyle.Foreground.#A3BE8C)touch$($PSStyle.Reset) <file> - Creates a new empty file.
 
-$($PSStyle.Foreground.Green)ff$($PSStyle.Reset) <name> - Finds files recursively with the specified name.
+$($PSStyle.Foreground.#A3BE8C)ff$($PSStyle.Reset) <name> - Finds files recursively with the specified name.
 
-$($PSStyle.Foreground.Green)Get-PubIP$($PSStyle.Reset) - Retrieves the public IP address of the machine.
+$($PSStyle.Foreground.#A3BE8C)Get-PubIP$($PSStyle.Reset) - Retrieves the public IP address of the machine.
 
-$($PSStyle.Foreground.Green)winutil$($PSStyle.Reset) - Runs the latest WinUtil full-release script from Chris Titus Tech.
+$($PSStyle.Foreground.#A3BE8C)winutil$($PSStyle.Reset) - Runs the latest WinUtil full-release script from Chris Titus Tech.
 
-$($PSStyle.Foreground.Green)winutildev$($PSStyle.Reset) - Runs the latest WinUtil pre-release script from Chris Titus Tech.
+$($PSStyle.Foreground.#A3BE8C)winutildev$($PSStyle.Reset) - Runs the latest WinUtil pre-release script from Chris Titus Tech.
 
-$($PSStyle.Foreground.Green)uptime$($PSStyle.Reset) - Displays the system uptime.
+$($PSStyle.Foreground.#A3BE8C)uptime$($PSStyle.Reset) - Displays the system uptime.
 
-$($PSStyle.Foreground.Green)reload-profile$($PSStyle.Reset) - Reloads the current user's PowerShell profile.
+$($PSStyle.Foreground.#A3BE8C)reload-profile$($PSStyle.Reset) - Reloads the current user's PowerShell profile.
 
-$($PSStyle.Foreground.Green)unzip$($PSStyle.Reset) <file> - Extracts a zip file to the current directory.
+$($PSStyle.Foreground.#A3BE8C)unzip$($PSStyle.Reset) <file> - Extracts a zip file to the current directory.
 
-$($PSStyle.Foreground.Green)hb$($PSStyle.Reset) <file> - Uploads the specified file's content to a hastebin-like service and returns the URL.
+$($PSStyle.Foreground.#A3BE8C)hb$($PSStyle.Reset) <file> - Uploads the specified file's content to a hastebin-like service and returns the URL.
 
-$($PSStyle.Foreground.Green)grep$($PSStyle.Reset) <regex> [dir] - Searches for a regex pattern in files within the specified directory or from the pipeline input.
+$($PSStyle.Foreground.#A3BE8C)grep$($PSStyle.Reset) <regex> [dir] - Searches for a regex pattern in files within the specified directory or from the pipeline input.
 
-$($PSStyle.Foreground.Green)df$($PSStyle.Reset) - Displays information about volumes.
+$($PSStyle.Foreground.#A3BE8C)df$($PSStyle.Reset) - Displays information about volumes.
 
-$($PSStyle.Foreground.Green)sed$($PSStyle.Reset) <file> <find> <replace> - Replaces text in a file.
+$($PSStyle.Foreground.#A3BE8C)sed$($PSStyle.Reset) <file> <find> <replace> - Replaces text in a file.
 
-$($PSStyle.Foreground.Green)which$($PSStyle.Reset) <name> - Shows the path of the command.
+$($PSStyle.Foreground.#A3BE8C)which$($PSStyle.Reset) <name> - Shows the path of the command.
 
-$($PSStyle.Foreground.Green)export$($PSStyle.Reset) <name> <value> - Sets an environment variable.
+$($PSStyle.Foreground.#A3BE8C)export$($PSStyle.Reset) <name> <value> - Sets an environment variable.
 
-$($PSStyle.Foreground.Green)pkill$($PSStyle.Reset) <name> - Kills processes by name.
+$($PSStyle.Foreground.#A3BE8C)pkill$($PSStyle.Reset) <name> - Kills processes by name.
 
-$($PSStyle.Foreground.Green)pgrep$($PSStyle.Reset) <name> - Lists processes by name.
+$($PSStyle.Foreground.#A3BE8C)pgrep$($PSStyle.Reset) <name> - Lists processes by name.
 
-$($PSStyle.Foreground.Green)head$($PSStyle.Reset) <path> [n] - Displays the first n lines of a file (default 10).
+$($PSStyle.Foreground.#A3BE8C)head$($PSStyle.Reset) <path> [n] - Displays the first n lines of a file (default 10).
 
-$($PSStyle.Foreground.Green)tail$($PSStyle.Reset) <path> [n] - Displays the last n lines of a file (default 10).
+$($PSStyle.Foreground.#A3BE8C)tail$($PSStyle.Reset) <path> [n] - Displays the last n lines of a file (default 10).
 
-$($PSStyle.Foreground.Green)nf$($PSStyle.Reset) <name> - Creates a new file with the specified name.
+$($PSStyle.Foreground.#A3BE8C)nf$($PSStyle.Reset) <name> - Creates a new file with the specified name.
 
-$($PSStyle.Foreground.Green)mkcd$($PSStyle.Reset) <dir> - Creates and changes to a new directory.
+$($PSStyle.Foreground.#A3BE8C)mkcd$($PSStyle.Reset) <dir> - Creates and changes to a new directory.
 
-$($PSStyle.Foreground.Green)docs$($PSStyle.Reset) - Changes the current directory to the user's Documents folder.
+$($PSStyle.Foreground.#A3BE8C)docs$($PSStyle.Reset) - Changes the current directory to the user's Documents folder.
 
-$($PSStyle.Foreground.Green)dtop$($PSStyle.Reset) - Changes the current directory to the user's Desktop folder.
+$($PSStyle.Foreground.#A3BE8C)dtop$($PSStyle.Reset) - Changes the current directory to the user's Desktop folder.
 
-$($PSStyle.Foreground.Green)ep$($PSStyle.Reset) - Opens the profile for editing.
+$($PSStyle.Foreground.#A3BE8C)ep$($PSStyle.Reset) - Opens the profile for editing.
 
-$($PSStyle.Foreground.Green)k9$($PSStyle.Reset) <name> - Kills a process by name.
+$($PSStyle.Foreground.#A3BE8C)k9$($PSStyle.Reset) <name> - Kills a process by name.
 
-$($PSStyle.Foreground.Green)la$($PSStyle.Reset) - Lists all files in the current directory with detailed formatting.
+$($PSStyle.Foreground.#A3BE8C)la$($PSStyle.Reset) - Lists all files in the current directory with detailed formatting.
 
-$($PSStyle.Foreground.Green)ll$($PSStyle.Reset) - Lists all files, including hidden, in the current directory with detailed formatting.
+$($PSStyle.Foreground.#A3BE8C)ll$($PSStyle.Reset) - Lists all files, including hidden, in the current directory with detailed formatting.
 
-$($PSStyle.Foreground.Green)gs$($PSStyle.Reset) - Shortcut for 'git status'.
+$($PSStyle.Foreground.#A3BE8C)gs$($PSStyle.Reset) - Shortcut for 'git status'.
 
-$($PSStyle.Foreground.Green)ga$($PSStyle.Reset) - Shortcut for 'git add .'.
+$($PSStyle.Foreground.#A3BE8C)ga$($PSStyle.Reset) - Shortcut for 'git add .'.
 
-$($PSStyle.Foreground.Green)gc$($PSStyle.Reset) <message> - Shortcut for 'git commit -m'.
+$($PSStyle.Foreground.#A3BE8C)gc$($PSStyle.Reset) <message> - Shortcut for 'git commit -m'.
 
-$($PSStyle.Foreground.Green)gp$($PSStyle.Reset) - Shortcut for 'git push'.
+$($PSStyle.Foreground.#A3BE8C)gp$($PSStyle.Reset) - Shortcut for 'git push'.
 
-$($PSStyle.Foreground.Green)g$($PSStyle.Reset) - Changes to the GitHub directory.
+$($PSStyle.Foreground.#A3BE8C)g$($PSStyle.Reset) - Changes to the GitHub directory.
 
-$($PSStyle.Foreground.Green)gcom$($PSStyle.Reset) <message> - Adds all changes and commits with the specified message.
+$($PSStyle.Foreground.#A3BE8C)gcom$($PSStyle.Reset) <message> - Adds all changes and commits with the specified message.
 
-$($PSStyle.Foreground.Green)lazyg$($PSStyle.Reset) <message> - Adds all changes, commits with the specified message, and pushes to the remote repository.
+$($PSStyle.Foreground.#A3BE8C)lazyg$($PSStyle.Reset) <message> - Adds all changes, commits with the specified message, and pushes to the remote repository.
 
-$($PSStyle.Foreground.Green)sysinfo$($PSStyle.Reset) - Displays detailed system information.
+$($PSStyle.Foreground.#A3BE8C)sysinfo$($PSStyle.Reset) - Displays detailed system information.
 
-$($PSStyle.Foreground.Green)flushdns$($PSStyle.Reset) - Clears the DNS cache.
+$($PSStyle.Foreground.#A3BE8C)flushdns$($PSStyle.Reset) - Clears the DNS cache.
 
-$($PSStyle.Foreground.Green)cpy$($PSStyle.Reset) <text> - Copies the specified text to the clipboard.
+$($PSStyle.Foreground.#A3BE8C)cpy$($PSStyle.Reset) <text> - Copies the specified text to the clipboard.
 
-$($PSStyle.Foreground.Green)pst$($PSStyle.Reset) - Retrieves text from the clipboard.
+$($PSStyle.Foreground.#A3BE8C)pst$($PSStyle.Reset) - Retrieves text from the clipboard.
 
-Use '$($PSStyle.Foreground.Magenta)Show-Help$($PSStyle.Reset)' to display this help message.
+Use '$($PSStyle.Foreground.#D08770)Show-Help$($PSStyle.Reset)' to display this help message.
 "@
     Write-Host $helpText
 }
@@ -626,4 +629,4 @@ if (Test-Path "$PSScriptRoot\CTTcustom.ps1") {
     Invoke-Expression -Command "& `"$PSScriptRoot\CTTcustom.ps1`""
 }
 
-Write-Host "$($PSStyle.Foreground.Yellow)Use 'Show-Help' to display help$($PSStyle.Reset)"
+Write-Host "$($PSStyle.Foreground.#EBCB8B)Use 'Show-Help' to display help$($PSStyle.Reset)"
