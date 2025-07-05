@@ -537,90 +537,90 @@ Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 # Help Function
 function Show-Help {
     $helpText = @"
-$($PSStyle.Foreground.#88C0D0)PowerShell Profile Help$($PSStyle.Reset)
-$($PSStyle.Foreground.#EBCB8B)=======================$($PSStyle.Reset)
+$($PSStyle.Foreground.FromRgb(136, 192, 208))PowerShell Profile Help$($PSStyle.Reset)
+$($PSStyle.Foreground.FromRgb(235, 203, 139))=======================$($PSStyle.Reset)
 
-$($PSStyle.Foreground.#A3BE8C)Update-Profile$($PSStyle.Reset) - Checks for profile updates from a remote repository and updates if necessary.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))Update-Profile$($PSStyle.Reset) - Checks for profile updates from a remote repository and updates if necessary.
 
-$($PSStyle.Foreground.#A3BE8C)Update-PowerShell$($PSStyle.Reset) - Checks for the latest PowerShell release and updates if a new version is available.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))Update-PowerShell$($PSStyle.Reset) - Checks for the latest PowerShell release and updates if a new version is available.
 
-$($PSStyle.Foreground.#A3BE8C)Edit-Profile$($PSStyle.Reset) - Opens the current user's profile for editing using the configured editor.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))Edit-Profile$($PSStyle.Reset) - Opens the current user's profile for editing using the configured editor.
 
-$($PSStyle.Foreground.#A3BE8C)touch$($PSStyle.Reset) <file> - Creates a new empty file.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))touch$($PSStyle.Reset) <file> - Creates a new empty file.
 
-$($PSStyle.Foreground.#A3BE8C)ff$($PSStyle.Reset) <name> - Finds files recursively with the specified name.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))ff$($PSStyle.Reset) <name> - Finds files recursively with the specified name.
 
-$($PSStyle.Foreground.#A3BE8C)Get-PubIP$($PSStyle.Reset) - Retrieves the public IP address of the machine.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))Get-PubIP$($PSStyle.Reset) - Retrieves the public IP address of the machine.
 
-$($PSStyle.Foreground.#A3BE8C)winutil$($PSStyle.Reset) - Runs the latest WinUtil full-release script from Chris Titus Tech.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))winutil$($PSStyle.Reset) - Runs the latest WinUtil full-release script from Chris Titus Tech.
 
-$($PSStyle.Foreground.#A3BE8C)winutildev$($PSStyle.Reset) - Runs the latest WinUtil pre-release script from Chris Titus Tech.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))winutildev$($PSStyle.Reset) - Runs the latest WinUtil pre-release script from Chris Titus Tech.
 
-$($PSStyle.Foreground.#A3BE8C)uptime$($PSStyle.Reset) - Displays the system uptime.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))uptime$($PSStyle.Reset) - Displays the system uptime.
 
-$($PSStyle.Foreground.#A3BE8C)reload-profile$($PSStyle.Reset) - Reloads the current user's PowerShell profile.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))reload-profile$($PSStyle.Reset) - Reloads the current user's PowerShell profile.
 
-$($PSStyle.Foreground.#A3BE8C)unzip$($PSStyle.Reset) <file> - Extracts a zip file to the current directory.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))unzip$($PSStyle.Reset) <file> - Extracts a zip file to the current directory.
 
-$($PSStyle.Foreground.#A3BE8C)hb$($PSStyle.Reset) <file> - Uploads the specified file's content to a hastebin-like service and returns the URL.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))hb$($PSStyle.Reset) <file> - Uploads the specified file's content to a hastebin-like service and returns the URL.
 
-$($PSStyle.Foreground.#A3BE8C)grep$($PSStyle.Reset) <regex> [dir] - Searches for a regex pattern in files within the specified directory or from the pipeline input.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))grep$($PSStyle.Reset) <regex> [dir] - Searches for a regex pattern in files within the specified directory or from the pipeline input.
 
-$($PSStyle.Foreground.#A3BE8C)df$($PSStyle.Reset) - Displays information about volumes.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))df$($PSStyle.Reset) - Displays information about volumes.
 
-$($PSStyle.Foreground.#A3BE8C)sed$($PSStyle.Reset) <file> <find> <replace> - Replaces text in a file.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))sed$($PSStyle.Reset) <file> <find> <replace> - Replaces text in a file.
 
-$($PSStyle.Foreground.#A3BE8C)which$($PSStyle.Reset) <name> - Shows the path of the command.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))which$($PSStyle.Reset) <name> - Shows the path of the command.
 
-$($PSStyle.Foreground.#A3BE8C)export$($PSStyle.Reset) <name> <value> - Sets an environment variable.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))export$($PSStyle.Reset) <name> <value> - Sets an environment variable.
 
-$($PSStyle.Foreground.#A3BE8C)pkill$($PSStyle.Reset) <name> - Kills processes by name.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))pkill$($PSStyle.Reset) <name> - Kills processes by name.
 
-$($PSStyle.Foreground.#A3BE8C)pgrep$($PSStyle.Reset) <name> - Lists processes by name.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))pgrep$($PSStyle.Reset) <name> - Lists processes by name.
 
-$($PSStyle.Foreground.#A3BE8C)head$($PSStyle.Reset) <path> [n] - Displays the first n lines of a file (default 10).
+$($PSStyle.Foreground.FromRgb(163, 190, 140))head$($PSStyle.Reset) <path> [n] - Displays the first n lines of a file (default 10).
 
-$($PSStyle.Foreground.#A3BE8C)tail$($PSStyle.Reset) <path> [n] - Displays the last n lines of a file (default 10).
+$($PSStyle.Foreground.FromRgb(163, 190, 140))tail$($PSStyle.Reset) <path> [n] - Displays the last n lines of a file (default 10).
 
-$($PSStyle.Foreground.#A3BE8C)nf$($PSStyle.Reset) <name> - Creates a new file with the specified name.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))nf$($PSStyle.Reset) <name> - Creates a new file with the specified name.
 
-$($PSStyle.Foreground.#A3BE8C)mkcd$($PSStyle.Reset) <dir> - Creates and changes to a new directory.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))mkcd$($PSStyle.Reset) <dir> - Creates and changes to a new directory.
 
-$($PSStyle.Foreground.#A3BE8C)docs$($PSStyle.Reset) - Changes the current directory to the user's Documents folder.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))docs$($PSStyle.Reset) - Changes the current directory to the user's Documents folder.
 
-$($PSStyle.Foreground.#A3BE8C)dtop$($PSStyle.Reset) - Changes the current directory to the user's Desktop folder.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))dtop$($PSStyle.Reset) - Changes the current directory to the user's Desktop folder.
 
-$($PSStyle.Foreground.#A3BE8C)ep$($PSStyle.Reset) - Opens the profile for editing.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))ep$($PSStyle.Reset) - Opens the profile for editing.
 
-$($PSStyle.Foreground.#A3BE8C)k9$($PSStyle.Reset) <name> - Kills a process by name.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))k9$($PSStyle.Reset) <name> - Kills a process by name.
 
-$($PSStyle.Foreground.#A3BE8C)la$($PSStyle.Reset) - Lists all files in the current directory with detailed formatting.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))la$($PSStyle.Reset) - Lists all files in the current directory with detailed formatting.
 
-$($PSStyle.Foreground.#A3BE8C)ll$($PSStyle.Reset) - Lists all files, including hidden, in the current directory with detailed formatting.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))ll$($PSStyle.Reset) - Lists all files, including hidden, in the current directory with detailed formatting.
 
-$($PSStyle.Foreground.#A3BE8C)gs$($PSStyle.Reset) - Shortcut for 'git status'.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))gs$($PSStyle.Reset) - Shortcut for 'git status'.
 
-$($PSStyle.Foreground.#A3BE8C)ga$($PSStyle.Reset) - Shortcut for 'git add .'.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))ga$($PSStyle.Reset) - Shortcut for 'git add .'.
 
-$($PSStyle.Foreground.#A3BE8C)gc$($PSStyle.Reset) <message> - Shortcut for 'git commit -m'.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))gc$($PSStyle.Reset) <message> - Shortcut for 'git commit -m'.
 
-$($PSStyle.Foreground.#A3BE8C)gp$($PSStyle.Reset) - Shortcut for 'git push'.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))gp$($PSStyle.Reset) - Shortcut for 'git push'.
 
-$($PSStyle.Foreground.#A3BE8C)g$($PSStyle.Reset) - Changes to the GitHub directory.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))g$($PSStyle.Reset) - Changes to the GitHub directory.
 
-$($PSStyle.Foreground.#A3BE8C)gcom$($PSStyle.Reset) <message> - Adds all changes and commits with the specified message.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))gcom$($PSStyle.Reset) <message> - Adds all changes and commits with the specified message.
 
-$($PSStyle.Foreground.#A3BE8C)lazyg$($PSStyle.Reset) <message> - Adds all changes, commits with the specified message, and pushes to the remote repository.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))lazyg$($PSStyle.Reset) <message> - Adds all changes, commits with the specified message, and pushes to the remote repository.
 
-$($PSStyle.Foreground.#A3BE8C)sysinfo$($PSStyle.Reset) - Displays detailed system information.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))sysinfo$($PSStyle.Reset) - Displays detailed system information.
 
-$($PSStyle.Foreground.#A3BE8C)flushdns$($PSStyle.Reset) - Clears the DNS cache.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))flushdns$($PSStyle.Reset) - Clears the DNS cache.
 
-$($PSStyle.Foreground.#A3BE8C)cpy$($PSStyle.Reset) <text> - Copies the specified text to the clipboard.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))cpy$($PSStyle.Reset) <text> - Copies the specified text to the clipboard.
 
-$($PSStyle.Foreground.#A3BE8C)pst$($PSStyle.Reset) - Retrieves text from the clipboard.
+$($PSStyle.Foreground.FromRgb(163, 190, 140))pst$($PSStyle.Reset) - Retrieves text from the clipboard.
 
-Use '$($PSStyle.Foreground.#D08770)Show-Help$($PSStyle.Reset)' to display this help message.
+Use '$($PSStyle.Foreground.FromRgb(208, 135, 112))Show-Help$($PSStyle.Reset)' to display this help message.
 "@
     Write-Host $helpText
 }
@@ -629,4 +629,4 @@ if (Test-Path "$PSScriptRoot\CTTcustom.ps1") {
     Invoke-Expression -Command "& `"$PSScriptRoot\CTTcustom.ps1`""
 }
 
-Write-Host "$($PSStyle.Foreground.#EBCB8B)Use 'Show-Help' to display help$($PSStyle.Reset)"
+Write-Host "$($PSStyle.Foreground.FromRgb(235, 203, 139))Use 'Show-Help' to display help$($PSStyle.Reset)"
