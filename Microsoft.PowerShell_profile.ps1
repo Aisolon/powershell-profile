@@ -7,7 +7,7 @@ $debug = $false
 $timeFilePath = [Environment]::GetFolderPath("MyDocuments") + "\PowerShell\LastExecutionTime.txt"
 
 # Define the update interval in days, set to -1 to always check
-$updateInterval = 7
+$updateInterval = 9999999 # never update
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor #BF616A
@@ -58,76 +58,76 @@ if (Test-Path($ChocolateyProfile)) {
 }
 
 # Check for Profile Updates
-function Update-Profile {
-    try {
-        $url = "https://raw.githubusercontent.com/ChrisTitusTech/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
-        $oldhash = Get-FileHash $PROFILE
-        Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
-        $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
-        if ($newhash.Hash -ne $oldhash.Hash) {
-            Copy-Item -Path "$env:temp/Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
-            Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor #D08770
-        } else {
-            Write-Host "Profile is up to date." -ForegroundColor #A3BE8C
-        }
-    } catch {
-        Write-Error "Unable to check for `$profile updates: $_"
-    } finally {
-        Remove-Item "$env:temp/Microsoft.PowerShell_profile.ps1" -ErrorAction SilentlyContinue
-    }
-}
-
-# Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
-if (-not $debug -and `
-    ($updateInterval -eq -1 -or `
-      -not (Test-Path $timeFilePath) -or `
-      ((Get-Date) - [datetime]::ParseExact((Get-Content -Path $timeFilePath), 'yyyy-MM-dd', $null)).TotalDays -gt $updateInterval)) {
-
-    Update-Profile
-    $currentTime = Get-Date -Format 'yyyy-MM-dd'
-    $currentTime | Out-File -FilePath $timeFilePath
-
-} elseif ($debug) {
-    Write-Warning "Skipping profile update check in debug mode"
-}
-
-function Update-PowerShell {
-    try {
-        Write-Host "Checking for PowerShell updates..." -ForegroundColor #88C0D0
-        $updateNeeded = $false
-        $currentVersion = $PSVersionTable.PSVersion.ToString()
-        $gitHubApiUrl = "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
-        $latestReleaseInfo = Invoke-RestMethod -Uri $gitHubApiUrl
-        $latestVersion = $latestReleaseInfo.tag_name.Trim('v')
-        if ($currentVersion -lt $latestVersion) {
-            $updateNeeded = $true
-        }
-
-        if ($updateNeeded) {
-            Write-Host "Updating PowerShell..." -ForegroundColor #EBCB8B
-            Start-Process powershell.exe -ArgumentList "-NoProfile -Command winget upgrade Microsoft.PowerShell --accept-source-agreements --accept-package-agreements" -Wait -NoNewWindow
-            Write-Host "PowerShell has been updated. Please restart your shell to reflect changes" -ForegroundColor #D08770
-        } else {
-            Write-Host "Your PowerShell is up to date." -ForegroundColor #A3BE8C
-        }
-    } catch {
-        Write-Error "Failed to update PowerShell. Error: $_"
-    }
-}
-
-# skip in debug mode
-# Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
-if (-not $debug -and `
-    ($updateInterval -eq -1 -or `
-     -not (Test-Path $timeFilePath) -or `
-     ((Get-Date).Date - [datetime]::ParseExact((Get-Content -Path $timeFilePath), 'yyyy-MM-dd', $null).Date).TotalDays -gt $updateInterval)) {
-
-    Update-PowerShell
-    $currentTime = Get-Date -Format 'yyyy-MM-dd'
-    $currentTime | Out-File -FilePath $timeFilePath
-} elseif ($debug) {
-    Write-Warning "Skipping PowerShell update in debug mode"
-}
+# function Update-Profile {
+#     try {
+#         $url = "https://raw.githubusercontent.com/Aisolon/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
+#         $oldhash = Get-FileHash $PROFILE
+#         Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
+#         $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
+#         if ($newhash.Hash -ne $oldhash.Hash) {
+#             Copy-Item -Path "$env:temp/Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
+#             Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor #D08770
+#         } else {
+#             Write-Host "Profile is up to date." -ForegroundColor #A3BE8C
+#         }
+#     } catch {
+#         Write-Error "Unable to check for `$profile updates: $_"
+#     } finally {
+#         Remove-Item "$env:temp/Microsoft.PowerShell_profile.ps1" -ErrorAction SilentlyContinue
+#     }
+# }
+#
+# # Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
+# if (-not $debug -and `
+#     ($updateInterval -eq -1 -or `
+#       -not (Test-Path $timeFilePath) -or `
+#       ((Get-Date) - [datetime]::ParseExact((Get-Content -Path $timeFilePath), 'yyyy-MM-dd', $null)).TotalDays -gt $updateInterval)) {
+#
+#     Update-Profile
+#     $currentTime = Get-Date -Format 'yyyy-MM-dd'
+#     $currentTime | Out-File -FilePath $timeFilePath
+#
+# } elseif ($debug) {
+#     Write-Warning "Skipping profile update check in debug mode"
+# }
+#
+# function Update-PowerShell {
+#     try {
+#         Write-Host "Checking for PowerShell updates..." -ForegroundColor #88C0D0
+#         $updateNeeded = $false
+#         $currentVersion = $PSVersionTable.PSVersion.ToString()
+#         $gitHubApiUrl = "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
+#         $latestReleaseInfo = Invoke-RestMethod -Uri $gitHubApiUrl
+#         $latestVersion = $latestReleaseInfo.tag_name.Trim('v')
+#         if ($currentVersion -lt $latestVersion) {
+#             $updateNeeded = $true
+#         }
+#
+#         if ($updateNeeded) {
+#             Write-Host "Updating PowerShell..." -ForegroundColor #EBCB8B
+#             Start-Process powershell.exe -ArgumentList "-NoProfile -Command winget upgrade Microsoft.PowerShell --accept-source-agreements --accept-package-agreements" -Wait -NoNewWindow
+#             Write-Host "PowerShell has been updated. Please restart your shell to reflect changes" -ForegroundColor #D08770
+#         } else {
+#             Write-Host "Your PowerShell is up to date." -ForegroundColor #A3BE8C
+#         }
+#     } catch {
+#         Write-Error "Failed to update PowerShell. Error: $_"
+#     }
+# }
+#
+# # skip in debug mode
+# # Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
+# if (-not $debug -and `
+#     ($updateInterval -eq -1 -or `
+#      -not (Test-Path $timeFilePath) -or `
+#      ((Get-Date).Date - [datetime]::ParseExact((Get-Content -Path $timeFilePath), 'yyyy-MM-dd', $null).Date).TotalDays -gt $updateInterval)) {
+#
+#     Update-PowerShell
+#     $currentTime = Get-Date -Format 'yyyy-MM-dd'
+#     $currentTime | Out-File -FilePath $timeFilePath
+# } elseif ($debug) {
+#     Write-Warning "Skipping PowerShell update in debug mode"
+# }
 
 function Clear-Cache {
     # add clear cache logic here
@@ -195,14 +195,14 @@ function ff($name) {
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
 
 # Open WinUtil full-release
-function winutil {
-	irm https://christitus.com/win | iex
-}
-
-# Open WinUtil pre-release
-function winutildev {
-	irm https://christitus.com/windev | iex
-}
+# function winutil {
+# 	irm https://christitus.com/win | iex
+# }
+#
+# # Open WinUtil pre-release
+# function winutildev {
+# 	irm https://christitus.com/windev | iex
+# }
 
 # System Utilities
 function admin {
@@ -370,15 +370,15 @@ function trash($path) {
 ### Quality of Life Aliases
 
 # Navigation Shortcuts
-function docs { 
-    $docs = if(([Environment]::GetFolderPath("MyDocuments"))) {([Environment]::GetFolderPath("MyDocuments"))} else {$HOME + "\Documents"}
-    Set-Location -Path $docs
-}
-    
-function dtop { 
-    $dtop = if ([Environment]::GetFolderPath("Desktop")) {[Environment]::GetFolderPath("Desktop")} else {$HOME + "\Documents"}
-    Set-Location -Path $dtop
-}
+# function docs { 
+#     $docs = if(([Environment]::GetFolderPath("MyDocuments"))) {([Environment]::GetFolderPath("MyDocuments"))} else {$HOME + "\Documents"}
+#     Set-Location -Path $docs
+# }
+#     
+# function dtop { 
+#     $dtop = if ([Environment]::GetFolderPath("Desktop")) {[Environment]::GetFolderPath("Desktop")} else {$HOME + "\Documents"}
+#     Set-Location -Path $dtop
+# }
 
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
@@ -503,17 +503,24 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
 
 # Get theme from profile.ps1 or use a default theme
+# function Get-Theme {
+#     if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
+#         $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
+#         if ($null -ne $existingTheme) {
+#             Invoke-Expression $existingTheme
+#             return
+#         }
+#         oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
+#     } else {
+#         oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
+#     }
+# }
 function Get-Theme {
-    if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
-        $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
+    $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
         if ($null -ne $existingTheme) {
             Invoke-Expression $existingTheme
             return
         }
-        oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
-    } else {
-        oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
-    }
 }
 
 ## Final Line to set prompt
@@ -625,8 +632,8 @@ Use '$($PSStyle.Foreground.FromRgb(208, 135, 112))Show-Help$($PSStyle.Reset)' to
     Write-Host $helpText
 }
 
-if (Test-Path "$PSScriptRoot\CTTcustom.ps1") {
-    Invoke-Expression -Command "& `"$PSScriptRoot\CTTcustom.ps1`""
-}
+# if (Test-Path "$PSScriptRoot\CTTcustom.ps1") {
+#     Invoke-Expression -Command "& `"$PSScriptRoot\CTTcustom.ps1`""
+# }
 
-Write-Host "$($PSStyle.Foreground.FromRgb(235, 203, 139))Use 'Show-Help' to display help$($PSStyle.Reset)"
+# Write-Host "$($PSStyle.Foreground.FromRgb(235, 203, 139))Use 'Show-Help' to display help$($PSStyle.Reset)"
